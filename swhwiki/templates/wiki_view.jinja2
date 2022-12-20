@@ -1,0 +1,16 @@
+{% extends "layout.jinja2" %}
+{% block content %}
+<h1>Wiki</h1>
+
+<a href="{{ request.route_url('wikipage_add') }}">Add
+    WikiPage</a>
+<ul>
+    {% for page in pages -%}
+        <li>
+            <a href="{{ request.route_url('wikipage_view', uid=page.uid) }}">
+                {{ page.title }}
+            </a>
+        </li>
+    {%- endfor %}
+</ul>
+{% endblock content %}
