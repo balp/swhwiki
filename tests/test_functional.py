@@ -1,6 +1,6 @@
 def test_root(testapp):
     res = testapp.get('/', status=200)
-    assert b'<title>Wiki: View</title>' in res.body
+    assert b'<title>HiQ Testing Wiki Thing</title>' in res.body
 
 
 def test_add_page(testapp):
