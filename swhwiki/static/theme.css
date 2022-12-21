@@ -18,6 +18,12 @@ h6 {
 p {
   font-weight: 300;
 }
+.btn{
+  text-decoration: none;
+}
+.navbar-brand {
+  text-decoration: none;
+}
 button, input, optgroup, select, textarea {
   color: black;
 }
