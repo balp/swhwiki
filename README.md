@@ -28,6 +28,10 @@ Getting Started
 
         env/bin/pytest --cov
 
+- Set up database.
+
+        env/bin/initialize_tutorial_db development.ini 
+
 - Run your project.
 
         env/bin/pserve development.ini
@@ -54,6 +58,10 @@ Getting Started
 - Run your project's tests.
 
         .\env\Scripts\python -m pytest --cov
+
+- Set up database.
+
+        .\env\Scripts\initialize_tutorial_db.exe development.ini 
 
 - Run your project.
 

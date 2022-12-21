@@ -4,7 +4,7 @@ body {
   font-family: "Open Sans", sans-serif;
   font-weight: 300;
   color: #ffffff;
-  background: #121212;
+  background: #333333;
 }
 h1,
 h2,
@@ -42,11 +42,11 @@ button, input, optgroup, select, textarea {
 }
 .starter-template .content h1 .smaller {
   font-size: 40px;
-  color: #f2b7bd;
+  color: #ff0096;
 }
 .starter-template .content .lead {
   font-size: 25px;
-  color: #f2b7bd;
+  color: #ff0096;
 }
 .starter-template .content .lead .font-normal {
   color: #ffffff;
@@ -73,28 +73,28 @@ button, input, optgroup, select, textarea {
   margin-right: 0;
 }
 .starter-template .links ul li.current-version {
-  color: #BB86FC;
+  color: #F185b2;
   font-weight: 400;
 }
 .starter-template .links ul li a, a {
-  color: #BB86FC;
+  color: #F185b2;
   text-decoration: underline;
 }
 .starter-template .links ul li a:hover, a:hover {
-  color: #03DAC6;
+  color: #84d1c4;
   text-decoration: underline;
 }
 .starter-template .links ul li .icon-muted {
-  color: #BB86FC;
+  color: #F185b2;
   margin-right: 5px;
 }
 .starter-template .links ul li:hover .icon-muted {
-  color: #03DAC6;
+  color: #84d1c4;
 }
 .starter-template .copyright {
   margin-top: 10px;
   font-size: 0.9em;
-  color: #03DAC6;
+  color: #84d1c4;
   text-transform: lowercase;
   float: right;
   right: 0;
