@@ -1,6 +1,6 @@
 import os
 
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 here = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(here, "README.md")) as f:
@@ -9,7 +9,7 @@ with open(os.path.join(here, "CHANGES.txt")) as f:
     CHANGES = f.read()
 
 requires = [
-    'bcrypt',
+    "bcrypt",
     "deform",
     "plaster_pastedeploy",
     "pyramid",
@@ -18,11 +18,9 @@ requires = [
     "sqlalchemy",
     "waitress",
     "zope.sqlalchemy",
-]
-
-dev_requires = [
     "pyramid_debugtoolbar",
 ]
+
 
 tests_require = [
     "WebTest",
@@ -50,7 +48,6 @@ setup(
     zip_safe=False,
     extras_require={
         "testing": tests_require,
-        "dev": dev_requires,
     },
     install_requires=requires,
     entry_points={

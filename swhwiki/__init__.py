@@ -1,7 +1,7 @@
 from pyramid.config import Configurator
-
 from sqlalchemy import engine_from_config
-from .models import DBSession, Base
+
+from .models import Base, DBSession
 from .security import SecurityPolicy
 
 
@@ -11,11 +11,11 @@ def main(global_config, **settings):
     DBSession.configure(bind=engine)
     Base.metadata.bind = engine
 
-    with Configurator(settings=settings, root_factory='.models.Root') as config:
+    with Configurator(settings=settings, root_factory=".models.Root") as config:
         config.include("pyramid_jinja2")
         config.set_security_policy(
             SecurityPolicy(
-                secret=settings['tutorial.secret'],
+                secret=settings["tutorial.secret"],
             ),
         )
         config.include(".routes")

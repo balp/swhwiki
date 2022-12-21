@@ -1,9 +1,9 @@
 import colander
 import deform.widget
-
 from pyramid.httpexceptions import HTTPFound
-from pyramid.view import view_config, forbidden_view_config
-from pyramid.security import remember, forget
+from pyramid.security import forget, remember
+from pyramid.view import forbidden_view_config, view_config
+
 from ..models import DBSession, Page
 from ..security import USERS, check_password
 
@@ -33,7 +33,9 @@ class WikiViews:
         return dict(title="Wiki View", pages=pages)
 
     @view_config(
-        route_name="wikipage_add", renderer="swhwiki:templates/wikipage_addedit.jinja2", permission='edit'
+        route_name="wikipage_add",
+        renderer="swhwiki:templates/wikipage_addedit.jinja2",
+        permission="edit",
     )
     def wikipage_add(self):
         form = self.wiki_form.render()
@@ -68,7 +70,9 @@ class WikiViews:
         return dict(page=page)
 
     @view_config(
-        route_name="wikipage_edit", renderer="swhwiki:templates/wikipage_addedit.jinja2", permission='edit'
+        route_name="wikipage_edit",
+        renderer="swhwiki:templates/wikipage_addedit.jinja2",
+        permission="edit",
     )
     def wikipage_edit(self):
         uid = int(self.request.matchdict["uid"])
@@ -95,41 +99,39 @@ class WikiViews:
 
         return dict(page=page, form=form)
 
-    @view_config(route_name='login', renderer='swhwiki:templates/login.jinja2')
-    @forbidden_view_config(renderer='swhwiki:templates/login.jinja2')
+    @view_config(route_name="login", renderer="swhwiki:templates/login.jinja2")
+    @forbidden_view_config(renderer="swhwiki:templates/login.jinja2")
     def login(self):
         request = self.request
-        login_url = request.route_url('login')
+        login_url = request.route_url("login")
         referrer = request.url
         if referrer == login_url:
-            referrer = '/'  # never use login form itself as came_from
-        came_from = request.params.get('came_from', referrer)
-        message = ''
-        login = ''
-        password = ''
-        if 'form.submitted' in request.params:
-            login = request.params['login']
-            password = request.params['password']
+            referrer = "/"  # never use login form itself as came_from
+        came_from = request.params.get("came_from", referrer)
+        message = ""
+        login = ""
+        password = ""
+        if "form.submitted" in request.params:
+            login = request.params["login"]
+            password = request.params["password"]
             hashed_pw = USERS.get(login)
             if hashed_pw and check_password(password, hashed_pw):
                 headers = remember(request, login)
-                return HTTPFound(location=came_from,
-                                 headers=headers)
-            message = 'Failed login'
+                return HTTPFound(location=came_from, headers=headers)
+            message = "Failed login"
 
         return dict(
-            name='Login',
+            name="Login",
             message=message,
-            url=request.application_url + '/login',
+            url=request.application_url + "/login",
             came_from=came_from,
             login=login,
             password=password,
         )
 
-    @view_config(route_name='logout')
+    @view_config(route_name="logout")
     def logout(self):
         request = self.request
         headers = forget(request)
-        url = request.route_url('wiki_view')
-        return HTTPFound(location=url,
-                         headers=headers)
+        url = request.route_url("wiki_view")
+        return HTTPFound(location=url, headers=headers)

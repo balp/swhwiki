@@ -1,10 +1,11 @@
 import os
+
+import pytest
+import transaction
+import webtest
 from pyramid.paster import get_appsettings
 from pyramid.scripting import prepare
 from pyramid.testing import DummyRequest, testConfig
-import pytest
-import webtest
-import transaction
 
 from swhwiki import main
 
@@ -12,7 +13,8 @@ from swhwiki import main
 @pytest.fixture(scope="function", autouse=True)
 def db_session():
     from sqlalchemy import create_engine
-    from swhwiki.models import DBSession, Page, Base
+
+    from swhwiki.models import Base, DBSession, Page
 
     engine = create_engine("sqlite://")
     Base.metadata.create_all(engine)

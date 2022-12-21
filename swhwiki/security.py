@@ -4,18 +4,17 @@ from pyramid.authorization import ACLHelper, Authenticated, Everyone
 
 
 def hash_password(pw):
-    pwhash = bcrypt.hashpw(pw.encode('utf8'), bcrypt.gensalt())
-    return pwhash.decode('utf8')
+    pwhash = bcrypt.hashpw(pw.encode("utf8"), bcrypt.gensalt())
+    return pwhash.decode("utf8")
 
 
 def check_password(pw, hashed_pw):
-    expected_hash = hashed_pw.encode('utf8')
-    return bcrypt.checkpw(pw.encode('utf8'), expected_hash)
+    expected_hash = hashed_pw.encode("utf8")
+    return bcrypt.checkpw(pw.encode("utf8"), expected_hash)
 
 
-USERS = {'editor': hash_password('editor'),
-         'viewer': hash_password('viewer')}
-GROUPS = {'editor': ['group:editors']}
+USERS = {"editor": hash_password("editor"), "viewer": hash_password("viewer")}
+GROUPS = {"editor": ["group:editors"]}
 
 
 class SecurityPolicy:
@@ -25,13 +24,13 @@ class SecurityPolicy:
 
     def identity(self, request):
         identity = self.authtkt.identify(request)
-        if identity is not None and identity['userid'] in USERS:
+        if identity is not None and identity["userid"] in USERS:
             return identity
 
     def authenticated_userid(self, request):
         identity = self.identity(request)
         if identity is not None:
-            return identity['userid']
+            return identity["userid"]
 
     def remember(self, request, userid, **kw):
         return self.authtkt.remember(request, userid, **kw)
@@ -47,6 +46,6 @@ class SecurityPolicy:
         principals = [Everyone]
         userid = self.authenticated_userid(request)
         if userid is not None:
-            principals += [Authenticated, 'u:' + userid]
+            principals += [Authenticated, "u:" + userid]
             principals += GROUPS.get(userid, [])
         return principals
