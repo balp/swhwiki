@@ -11,4 +11,4 @@ def test_notfound_view(app_request):
 def test_home_view(app_request):
     inst = WikiViews(app_request)
     response = inst.wiki_view()
-    assert len(list(response['pages'])) == 1
+    assert len(list(response["pages"])) == 1

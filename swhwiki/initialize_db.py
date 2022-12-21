@@ -7,19 +7,18 @@ from sqlalchemy import engine_from_config
 from pyramid.paster import (
     get_appsettings,
     setup_logging,
-    )
+)
 
 from .models import (
     DBSession,
     Page,
     Base,
-    )
+)
 
 
 def usage(argv):
     cmd = os.path.basename(argv[0])
-    print('usage: %s <config_uri>\n'
-          '(example: "%s development.ini")' % (cmd, cmd))
+    print("usage: %s <config_uri>\n" '(example: "%s development.ini")' % (cmd, cmd))
     sys.exit(1)
 
 
@@ -29,9 +28,9 @@ def main(argv=sys.argv):
     config_uri = argv[1]
     setup_logging(config_uri)
     settings = get_appsettings(config_uri)
-    engine = engine_from_config(settings, 'sqlalchemy.')
+    engine = engine_from_config(settings, "sqlalchemy.")
     DBSession.configure(bind=engine)
     Base.metadata.create_all(engine)
     with transaction.manager:
-        model = Page(title='Root', body='Root Page')
+        model = Page(title="Root", body="Root Page")
         DBSession.add(model)

@@ -9,49 +9,49 @@ import transaction
 from swhwiki import main
 
 
-@pytest.fixture(scope='function', autouse=True)
+@pytest.fixture(scope="function", autouse=True)
 def db_session():
     from sqlalchemy import create_engine
-    from swhwiki.models import (
-        DBSession,
-        Page,
-        Base
-    )
-    engine = create_engine('sqlite://')
+    from swhwiki.models import DBSession, Page, Base
+
+    engine = create_engine("sqlite://")
     Base.metadata.create_all(engine)
     DBSession.configure(bind=engine)
     with transaction.manager:
-        model = Page(title='FrontPage', body='This is the front page')
+        model = Page(title="FrontPage", body="This is the front page")
         DBSession.add(model)
     yield DBSession
     DBSession.remove()
 
 
 def pytest_addoption(parser):
-    parser.addoption('--ini', action='store', metavar='INI_FILE')
+    parser.addoption("--ini", action="store", metavar="INI_FILE")
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope="session")
 def ini_file(request):
     # potentially grab this path from a pytest option
-    return os.path.abspath(request.config.option.ini or 'testing.ini')
+    return os.path.abspath(request.config.option.ini or "testing.ini")
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope="session")
 def app_settings(ini_file):
     return get_appsettings(ini_file)
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope="session")
 def app(app_settings):
     return main({}, **app_settings)
 
 
 @pytest.fixture
 def testapp(app):
-    testapp = webtest.TestApp(app, extra_environ={
-        'HTTP_HOST': 'example.com',
-    })
+    testapp = webtest.TestApp(
+        app,
+        extra_environ={
+            "HTTP_HOST": "example.com",
+        },
+    )
 
     return testapp
 
@@ -66,8 +66,8 @@ def app_request(app):
 
     """
     with prepare(registry=app.registry) as env:
-        request = env['request']
-        request.host = 'example.com'
+        request = env["request"]
+        request.host = "example.com"
         yield request
 
 
@@ -85,7 +85,7 @@ def dummy_request():
 
     """
     request = DummyRequest()
-    request.host = 'example.com'
+    request.host = "example.com"
 
     return request
 
